@@ -1,0 +1,39 @@
+[client]
+port                    = 3306
+default-character-set   = utf8mb4
+
+
+[mysqld]
+user                    = mysql
+port                    = 3306
+sql_mode                = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+
+default-storage-engine  = InnoDB
+default-authentication-plugin   = mysql_native_password
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+init_connect            = 'SET NAMES utf8mb4'
+
+slow_query_log
+long_query_time         = 3
+slow-query-log-file     = /var/lib/mysql/mysql.slow.log
+log-error               = /var/lib/mysql/mysql.error.log
+
+default-time-zone       = '+8:00'
+
+server_id = 2
+log-bin = mysql-bin
+#将从服务器从主服务器收到的更新记入到从服务器自己的二进制日志文件中
+log-slave-updates = 1
+sync_binlog = 0
+#从库不允许写操作
+read-only=1
+#log buffer将每秒一次地写入log file中，并且log file的flush(刷到磁盘)操作同时进行。该模式下在事务提交的时候，不会主动触发写入磁盘的操作
+innodb_flush_log_at_trx_commit = 0
+#MySQL主从复制的时候，当Master和Slave之间的网络中断，但是Master和Slave无法察觉的情况下（比如防火墙或者路由问题）。Slave会等待slave_net_timeout设置的秒数后，才能认为网络出现故障，然后才会重连并且追赶这段时间主库的数据
+slave-net-timeout = 60
+log_bin_trust_function_creators = 1
+
+
+[mysql]
+default-character-set   = utf8mb4

@@ -1,0 +1,40 @@
+[client]
+port                    = 3306
+default-character-set   = utf8mb4
+
+
+[mysqld]
+user                    = mysql
+port                    = 3306
+sql_mode                = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+
+default-storage-engine  = InnoDB
+default-authentication-plugin   = mysql_native_password
+character-set-server    = utf8mb4
+collation-server        = utf8mb4_unicode_ci
+init_connect            = 'SET NAMES utf8mb4'
+
+slow_query_log
+long_query_time         = 3
+slow-query-log-file     = /var/lib/mysql/mysql.slow.log
+log-error               = /var/lib/mysql/mysql.error.log
+
+default-time-zone       = '+8:00'
+
+server_id = 2
+log-bin = mysql-bin
+log-slave-updates = on
+sync_binlog = 0
+#log buffer将每秒一次地写入log file中，并且log file的flush(刷到磁盘)操作同时进行。该模式下在事务提交的时候，不会主动触发写入磁盘的操作
+innodb_flush_log_at_trx_commit = 0
+#这个参数一般用在主主同步中，用来错开自增值, 防止键值冲突
+auto_increment_offset = 2
+#这个参数一般用在主主同步中，用来错开自增值, 防止键值冲突
+auto_increment_increment = 2
+#二进制日志自动删除的天数，默认值为0,表示“没有自动删除”，启动时和二进制日志循环时可能删除
+expire_logs_days = 7
+log_bin_trust_function_creators = 1
+
+
+[mysql]
+default-character-set   = utf8mb4

@@ -1,0 +1,31 @@
+version: "3"
+services:
+  mysql_master:
+    image: mysql:${MYSQL_MASTER_VERSION}
+    container_name: mysql-master
+    ports:
+      - "${MYSQL_MASTER_HOST_PORT}:3306"
+    volumes:
+      - ${MYSQL_MASTER_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:rw
+      - ${MYSQL_MASTER_DATA_DIR}:/var/lib/mysql/:rw
+    networks:
+      - default
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_MASTER_ROOT_PASSWORD}"
+
+  mysql_slave:
+    image: mysql:${MYSQL_SALVE_VERSION}
+    container_name: mysql-slave
+    ports:
+      - "${MYSQL_SALVE_HOST_PORT}:3306"
+    volumes:
+      - ${MYSQL_SALVE_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:rw
+      - ${MYSQL_SALVE_DATA_DIR}:/var/lib/mysql/:rw
+    networks:
+      - default
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_SALVE_ROOT_PASSWORD}"
+
+
+networks:
+  default:
