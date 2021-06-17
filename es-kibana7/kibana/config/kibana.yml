@@ -1,0 +1,6 @@
+server.name: kibana
+server.host: "0"
+i18n.locale: "zh-CN"
+elasticsearch.hosts: [ "http://es:9200" ]
+elasticsearch.username: kibana
+elasticsearch.password: ysbb@es

@@ -1,0 +1,6 @@
+.idea
+.DS_Store
+nohup.out
+www/*
+!www/localhost/
+logs/*
